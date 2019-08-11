@@ -4,5 +4,6 @@ from . import views
 
 urlpatterns = [
     path('', views.GetResult().as_view()),
+    path('getPredictions/', views.GetResult().as_view()),
     path('trial', views.inbuilt),
 ]
