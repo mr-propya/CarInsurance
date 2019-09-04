@@ -9,7 +9,7 @@ class FileUpload(models.Model):
 
 
 class Customer(models.Model):
-    uid = models.CharField(max_length=50)
+    uid = models.CharField(max_length=50, unique=True)
     name = models.CharField(max_length=50)
     phoneNum = models.CharField(max_length=15)
     ownedCars = models.IntegerField()
@@ -22,14 +22,17 @@ class Car(models.Model):
     vehicleNum = models.CharField(max_length=20)
     purchasedAt = models.DateTimeField(blank=True)
     model = models.CharField(max_length=50)
-    owner = models.ForeignKey(Customer,on_delete=models.CASCADE())
+    owner = models.ForeignKey(Customer,on_delete=models.CASCADE, default="User")
+
+    def __str__(self):
+        return self.vehicleNum
 
 
 class Insurance(models.Model):
     dateOfInsurance = models.DateField()
     monthlyPremium = models.FloatField()
     balance = models.FloatField()
-    car = models.ForeignKey(Car, on_delete=models.CASCADE())
+    car = models.ForeignKey(Car, on_delete=models.CASCADE, default="Insurance")
 
 
 class Claims(models.Model):
@@ -37,23 +40,19 @@ class Claims(models.Model):
     raisedAt = models.DateTimeField()
     settledAt = models.DateTimeField()
     price = models.FloatField()
-    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE())
+    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE)
 
 
 class Predictions(models.Model):
     predictedAt = models.DateTimeField()
     predictedPrice = models.FloatField()
     actualPrice = models.FloatField()
-    claim = models.ForeignKey(Claims, on_delete=models.CASCADE())
+    claim = models.ForeignKey(Claims, on_delete=models.CASCADE, default="Predictions")
 
 
 class Transactions(models.Model):
     time = models.TimeField()
     transactionId = models.IntegerField()
     status = models.CharField(max_length=20)
-    car = models.ForeignKey(Car,on_delete=models.CASCADE())
-    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE())
-
-
-    def __str__(self):
-        return self.vehicleNum
+    car = models.ForeignKey(Car,on_delete=models.CASCADE)
+    insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE, default="Transactions")
