@@ -4,7 +4,7 @@ from rest_framework.parsers import JSONParser,MultiPartParser
 from rest_framework.response import Response
 from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from .serializers import FileSerializer
+from .serializers import FileSerializer,UserSerializer
 from .getPredictions import predict
 import json
 
@@ -38,3 +38,14 @@ class GetResult(APIView):
 def inbuilt(req):
     print(type(req.files))
     return HttpResponse("hi there")
+
+
+class addUser(APIView):
+    parser_classes = [JSONParser, MultiPartParser]
+    def post(self, req):
+        data = req.data
+        from .utils import CustomerHelper
+        helper = CustomerHelper()
+        helper.createUser(details=data)
+
+        return Response("asaassa"+str(dict(data)))
