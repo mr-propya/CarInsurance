@@ -1,19 +1,26 @@
-from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser,MultiPartParser
 from rest_framework.response import Response
 from django.http.response import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from .serializers import FileSerializer,UserSerializer
+from .serializers import FileSerializer
 from .getPredictions import predict
-import json
+from .utils import Customer, Car, Insurance
+
 
 # Create your views here.
+class BaseApiView(APIView):
+    parser_classes = [JSONParser, MultiPartParser]
+
+    def getResults(self, req, function):
+        res = function(req.data)
+        print(res)
+        return Response(str(res))
+
+
 
 def index(req):
     predict("")
     return HttpResponse("It works")
-
 
 
 class GetResult(APIView):
@@ -34,18 +41,46 @@ class GetResult(APIView):
         return Response(response)
 
 
-@csrf_exempt
-def inbuilt(req):
-    print(type(req.files))
-    return HttpResponse("hi there")
-
-
 class addUser(APIView):
     parser_classes = [JSONParser, MultiPartParser]
+
     def post(self, req):
         data = req.data
-        from .utils import CustomerHelper
-        helper = CustomerHelper()
-        helper.createUser(details=data)
+        res = Customer.createUser(details=data)
+        return Response(str(res))
 
-        return Response("asaassa"+str(dict(data)))
+
+class addCarForUser(APIView):
+    parser_classes = [JSONParser, MultiPartParser]
+
+    def post(self, req):
+        data = req.data
+        res = Car.newCar(details=data)
+        print(res)
+        return Response(str(res))
+
+
+class buyInsurance(APIView):
+    parser_classes = [JSONParser, MultiPartParser]
+
+    def post(self, req):
+        res = Insurance.newInsurance(req.data)
+        print(res)
+        return Response(str(res))
+
+#
+# class payAmount(APIView):
+#     parser_classes = [JSONParser, MultiPartParser]
+#
+#     def post(self, req):
+#         res = Insurance.payAmount(req.data)
+#         print(res)
+#         return Response(str(res))
+
+
+
+
+class payAmount(BaseApiView):
+    def post(self, req):
+        return super().getResults(req, Insurance.payAmount)
+

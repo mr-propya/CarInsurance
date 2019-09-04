@@ -54,5 +54,4 @@ class Transactions(models.Model):
     time = models.TimeField()
     transactionId = models.IntegerField()
     status = models.CharField(max_length=20)
-    car = models.ForeignKey(Car,on_delete=models.CASCADE)
     insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE, default="Transactions")
