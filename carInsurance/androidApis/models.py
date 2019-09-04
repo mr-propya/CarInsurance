@@ -1,10 +1,20 @@
 from django.db import models
 
-# Create your models here.
-
 
 class FileUpload(models.Model):
     uploadedFile = models.FileField()
 
     def __str__(self):
         return self.uploadedFile.name
+
+
+class Customer(models.Model):
+    uid = models.CharField(max_length=50)
+    phoneNum = models.CharField(max_length=15)
+    ownedCars = models.IntegerField()
+
+
+class Car(models.Model):
+    vehicleNum = models.CharField(max_length=20)
+    purchasedAt = models.DateTimeField(blank=True)
+    model = models.CharField(max_length=50)
