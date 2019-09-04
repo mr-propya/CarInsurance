@@ -32,14 +32,14 @@ class Claims(models.Model):
     verified = models.BooleanField()
     raisedAt = models.DateTimeField()
     settledAt = models.DateTimeField()
-    price = models.IntegerField()
+    price = models.FloatField()
     insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE())
 
 
 class Predictions(models.Model):
     predictedAt = models.DateTimeField()
-    predictedPrice = models.IntegerField()
-    actualPrice = models.IntegerField()
+    predictedPrice = models.FloatField()
+    actualPrice = models.FloatField()
     claim = models.ForeignKey(Claims, on_delete=models.CASCADE())
 
 
