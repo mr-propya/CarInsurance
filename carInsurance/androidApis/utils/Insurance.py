@@ -36,3 +36,5 @@ def payAmount(data):
     from django.utils import timezone
     trans.time = timezone.now()
     trans.insurance = insurance
+    res["status"] = "success"
+    return res

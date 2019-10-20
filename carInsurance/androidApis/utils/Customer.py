@@ -11,6 +11,6 @@ def createUser(details):
     try:
         customer.save()
     except Exception:
-        return {"status":"error"}
-    return {"status":"success"}
+        return {"status": "error"}
+    return {"status": "success"}
 

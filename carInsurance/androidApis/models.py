@@ -22,7 +22,7 @@ class Car(models.Model):
     vehicleNum = models.CharField(max_length=20)
     purchasedAt = models.DateTimeField(blank=True)
     model = models.CharField(max_length=50)
-    owner = models.ForeignKey(Customer,on_delete=models.CASCADE, default="User")
+    owner = models.ForeignKey(Customer, on_delete=models.CASCADE, default="User")
 
     def __str__(self):
         return self.vehicleNum
@@ -53,5 +53,6 @@ class Predictions(models.Model):
 class Transactions(models.Model):
     time = models.TimeField()
     transactionId = models.IntegerField()
+    premiumId = models.IntegerField()
     status = models.CharField(max_length=20)
     insurance = models.ForeignKey(Insurance, on_delete=models.CASCADE, default="Transactions")

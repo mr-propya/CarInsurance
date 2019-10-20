@@ -24,7 +24,10 @@ def predict(path):
                   'side_major', 'side_minor', 'side_moderate', 'whole']
     for i in range(len(CATEGORIES)):
         pred[CATEGORIES[i]]=predictions[0][i]
-
+    maxResults = dict()
+    maxResults["maxResult"] = CATEGORIES[int(np.argmax(predictions[0]))]
+    maxResults["maxProb"] = predictions[0][int(np.argmax(predictions[0]))]
+    pred["max"] = maxResults
     return pred
 
 

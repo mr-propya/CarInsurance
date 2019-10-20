@@ -17,7 +17,6 @@ class BaseApiView(APIView):
         return Response(str(res))
 
 
-
 def index(req):
     predict("")
     return HttpResponse("It works")
@@ -37,47 +36,27 @@ class GetResult(APIView):
             response["file"] = file.data["uploadedFile"]
         else:
             response["status"] = "failed"
+            response["error"] = "file format not supported or invalid"
 
         return Response(response)
 
 
-class addUser(APIView):
-    parser_classes = [JSONParser, MultiPartParser]
+class addUser(BaseApiView):
 
     def post(self, req):
-        data = req.data
-        res = Customer.createUser(details=data)
-        return Response(str(res))
+        return super().getResults(req,Customer.createUser)
 
 
-class addCarForUser(APIView):
-    parser_classes = [JSONParser, MultiPartParser]
+class addCarForUser(BaseApiView):
 
     def post(self, req):
-        data = req.data
-        res = Car.newCar(details=data)
-        print(res)
-        return Response(str(res))
+        return super().getResults(req,Car.newCar)
 
 
-class buyInsurance(APIView):
-    parser_classes = [JSONParser, MultiPartParser]
+class buyInsurance(BaseApiView):
 
     def post(self, req):
-        res = Insurance.newInsurance(req.data)
-        print(res)
-        return Response(str(res))
-
-#
-# class payAmount(APIView):
-#     parser_classes = [JSONParser, MultiPartParser]
-#
-#     def post(self, req):
-#         res = Insurance.payAmount(req.data)
-#         print(res)
-#         return Response(str(res))
-
-
+        return super().getResults(req,Insurance.newInsurance)
 
 
 class payAmount(BaseApiView):
