@@ -1,12 +1,14 @@
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser,MultiPartParser
 from rest_framework.response import Response
+from django.http import JsonResponse
 from django.http.response import HttpResponse
 from .serializers import FileSerializer
 from .getPredictions import predict
 from .utils import Insurance
 from .utils.Customer import Customer
 from .utils.Car import Car
+from django.views.decorators.csrf import  csrf_exempt
 
 # Create your views here.
 class BaseApiView(APIView):
@@ -15,7 +17,7 @@ class BaseApiView(APIView):
     def getResults(self, req, function):
         res = function(req.data)
         print(res)
-        return Response(str(res))
+        return JsonResponse(res)
 
 
 def index(req):
@@ -41,6 +43,10 @@ class GetResult(APIView):
 
         return Response(response)
 
+
+class verifyUser(BaseApiView):
+    def post(self,req):
+        return super().getResults(req,Customer().verifyUser)
 
 class addUser(BaseApiView):
 
