@@ -4,8 +4,9 @@ from rest_framework.response import Response
 from django.http.response import HttpResponse
 from .serializers import FileSerializer
 from .getPredictions import predict
-from .utils import Customer, Car, Insurance
-
+from .utils import Insurance
+from .utils.Customer import Customer
+from .utils.Car import Car
 
 # Create your views here.
 class BaseApiView(APIView):
@@ -44,13 +45,13 @@ class GetResult(APIView):
 class addUser(BaseApiView):
 
     def post(self, req):
-        return super().getResults(req,Customer.createUser)
+        return super().getResults(req,Customer().createUser)
 
 
 class addCarForUser(BaseApiView):
 
     def post(self, req):
-        return super().getResults(req,Car.newCar)
+        return super().getResults(req,Car().newCar)
 
 
 class buyInsurance(BaseApiView):

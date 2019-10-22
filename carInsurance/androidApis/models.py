@@ -9,7 +9,8 @@ class FileUpload(models.Model):
 
 
 class Customer(models.Model):
-    uid = models.CharField(max_length=50, unique=True)
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     phoneNum = models.CharField(max_length=15)
     ownedCars = models.IntegerField()
