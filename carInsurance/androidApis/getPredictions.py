@@ -26,8 +26,11 @@ def predict(path):
         pred[CATEGORIES[i]]=predictions[0][i]
     maxResults = dict()
     maxResults["maxResult"] = CATEGORIES[int(np.argmax(predictions[0]))]
+    maxResults["cost"] = "5000"
+    maxResults["time"] = "7-14 Days"
     maxResults["maxProb"] = predictions[0][int(np.argmax(predictions[0]))]
     pred["max"] = maxResults
+
     return pred
 
 

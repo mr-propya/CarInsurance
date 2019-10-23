@@ -26,7 +26,7 @@ def index(req):
 
 
 class GetResult(APIView):
-    parser_classes = [JSONParser,MultiPartParser]
+    parser_classes = [JSONParser, MultiPartParser]
 
     def post(self,req):
         response = dict()
