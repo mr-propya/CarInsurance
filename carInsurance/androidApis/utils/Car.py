@@ -3,7 +3,7 @@ from ..models import Customer, Car
 
 class Car:
 
-    def newCar(details):
+    def newCar(self, details):
         car = Car()
         response = {}
         response["status"] = "success"
@@ -26,6 +26,6 @@ class Car:
         car.save()
         return response
 
-    def sellCar(carId):
+    def sellCar(self, carId):
         Car.objects.get(pk=carId).delete()
 

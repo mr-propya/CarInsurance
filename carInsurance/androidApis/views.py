@@ -17,7 +17,7 @@ class BaseApiView(APIView):
     def getResults(self, req, function):
         res = function(req.data)
         print(res)
-        return JsonResponse(res)
+        return JsonResponse(res,safe=False)
 
 
 def index(req):
@@ -42,6 +42,11 @@ class GetResult(APIView):
             response["error"] = "file format not supported or invalid"
 
         return Response(response)
+
+
+class getCars(BaseApiView):
+    def post(self,req):
+        return super().getResults(req,Customer().getCars)
 
 
 class verifyUser(BaseApiView):
@@ -70,3 +75,6 @@ class payAmount(BaseApiView):
     def post(self, req):
         return super().getResults(req, Insurance.payAmount)
 
+class getInsurance(BaseApiView):
+    def post(self,req):
+        return super().getResults(req,Insurance.Insurance().getExistingInsuarance)

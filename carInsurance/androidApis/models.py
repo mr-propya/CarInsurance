@@ -23,6 +23,7 @@ class Car(models.Model):
     vehicleNum = models.CharField(max_length=20)
     purchasedAt = models.DateTimeField(blank=True)
     model = models.CharField(max_length=50)
+    claims = models.IntegerField(default=0)
     owner = models.ForeignKey(Customer, on_delete=models.CASCADE, default="User")
 
     def __str__(self):
@@ -30,9 +31,9 @@ class Car(models.Model):
 
 
 class Insurance(models.Model):
-    dateOfInsurance = models.DateField()
-    monthlyPremium = models.FloatField()
-    balance = models.FloatField()
+    boughtAt = models.DateField()
+    premium = models.FloatField()
+    balance = models.FloatField(default=0)
     car = models.ForeignKey(Car, on_delete=models.CASCADE, default="Insurance")
 
 

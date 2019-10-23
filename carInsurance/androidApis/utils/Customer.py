@@ -1,4 +1,4 @@
-from ..models import Customer as CustomerModel
+from ..models import Customer as CustomerModel ,Car as CarModels
 from django.forms.models import model_to_dict
 
 class Customer:
@@ -33,3 +33,10 @@ class Customer:
             return {"status": "error"}
         return {"status": "success"}
 
+    def getCars(self, details):
+        customer = details["customer"]
+        cust = CustomerModel.objects.filter(username=customer).get()
+        cars = CarModels.objects.filter(owner=cust)
+        print(cars)
+
+        return {"status": "success", "result": list(cars.values())}
